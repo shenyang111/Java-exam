@@ -4,12 +4,14 @@ class Manager extends Employer {
     double pay = 8000;
     
     double getPay() {
-        return 8000;
+        return pay;
     }
     
     Manager(String name) {
         super(name);
         no = id;
+
+        this.type = EmployerType.manager;
     }
     
     public String toString() {

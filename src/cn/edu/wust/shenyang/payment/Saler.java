@@ -3,17 +3,24 @@ package cn.edu.wust.shenyang.payment;
 class Saler extends Employer {
     private double saleNum;
     
-    Saler(String name) {
+    Saler(String name, double saleNum) {
         super(name);
         no = id;
+
+        this.type = EmployerType.saler;
+        this.saleNum = saleNum;
     }
 
     public double getPay() {
         return saleNum * 0.04;
     }
 
-    public void setSaleNum(float saleNum) {
+    public void setSaleNum(double saleNum) {
         this.saleNum = saleNum;
+    }
+
+    public double getSaleNum() {
+        return saleNum;
     }
 
     public String toString() {
