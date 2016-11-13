@@ -76,7 +76,11 @@ public class AddEmployerUI extends JDialog {
 
             String name = ui.nameTextField.getText();
             int type_index = ui.typeCombo.getSelectedIndex();
-            double workload = Double.valueOf(ui.workloadTextField.getText());
+            double workload = 0;
+            String workload_str = ui.workloadTextField.getText();
+            if (!workload_str.isEmpty()) {
+                workload = Double.valueOf(workload_str);
+            }
 
             EmployerType type = null;
             switch (type_index) {
