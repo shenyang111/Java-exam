@@ -6,7 +6,7 @@ import java.util.List;
 
 public class CDataAccess {
 
-    // private List<Employer> employers = new ArrayList<Employer>();
+    private List<Employer> employers = new ArrayList<Employer>();
     public static String DRIVER_MYSQL = "com.mysql.jdbc.Driver";
 
     private Statement statement;
@@ -69,7 +69,7 @@ public class CDataAccess {
     public void deletesql() {
         try
         {
-            statement.executeQuery("TRUNCATE TABLE UsersInfo");
+            statement.executeQuery("TRUNCATE TABLE UserInfo");
         } catch (SQLException e)
         {
             // TODO Auto-generated catch block
@@ -97,5 +97,6 @@ public class CDataAccess {
 
         ResultSet result = query(sql);
         printUserInfo(result);
+        
     }
 }

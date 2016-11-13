@@ -5,6 +5,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class MainUI extends JFrame implements ActionListener {
 
     private static final String[] SEARCH_RESULT_COLUMNS = {"no", "name", "type", "salaryHours/saleNum", "payment"};
@@ -24,6 +25,7 @@ public class MainUI extends JFrame implements ActionListener {
     private JButton editButton = null;
     private JButton deleteButton = null;
     private JButton saveButton = null;
+    private JButton loadButton = null;
 
     private DefaultTableModel searchResultTableModel = null;
     private JTable searchResultTable = null;
@@ -58,6 +60,9 @@ public class MainUI extends JFrame implements ActionListener {
 
         saveButton = new JButton("Save");
         saveButton.addActionListener(new SaveActionListener());
+        
+        loadButton = new JButton("Load");
+        loadButton.addActionListener(new LoadActionListener());
 
         jp1.add(eid_label);
         jp1.add(eid_text_field);
@@ -70,6 +75,8 @@ public class MainUI extends JFrame implements ActionListener {
         jp1.add(addButton);
         jp1.add(editButton);
         jp1.add(deleteButton);
+        jp1.add(saveButton);
+        jp1.add(loadButton);
 
         this.add(jp1);
 
@@ -158,7 +165,7 @@ public class MainUI extends JFrame implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             MainUI ui = MainUI.this;
             int row = ui.searchResultTable.getSelectedRow();
-            long no = (long)ui.searchResultTableModel.getValueAt(row, 0);
+            long no = (Long)ui.searchResultTableModel.getValueAt(row, 0);
             new EditEmployerUI(MainUI.this, true, MainUI.this.employerSet, no);
         }
     }
@@ -168,7 +175,7 @@ public class MainUI extends JFrame implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             MainUI ui = MainUI.this;
             int row = ui.searchResultTable.getSelectedRow();
-            long no = (long)ui.searchResultTableModel.getValueAt(row, 0);
+            long no = (Long)ui.searchResultTableModel.getValueAt(row, 0);
             new DeleteEmployerUI(MainUI.this, true, MainUI.this.employerSet, no);
         }
     }
@@ -178,6 +185,14 @@ public class MainUI extends JFrame implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             MainUI ui = MainUI.this;
             ui.dataAccess.save(ui.employerSet.listAllEmployer());
+        }
+    }
+    
+    class LoadActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            MainUI ui = MainUI.this;
+            ui.dataAccess.load();
         }
     }
 
