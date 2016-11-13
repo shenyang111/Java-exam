@@ -23,12 +23,14 @@ public class MainUI extends JFrame implements ActionListener {
     private JButton addButton = null;
     private JButton editButton = null;
     private JButton deleteButton = null;
+    private JButton saveButton = null;
 
     private DefaultTableModel searchResultTableModel = null;
     private JTable searchResultTable = null;
     private JScrollPane jsp = null;
 
     private CEmployerSet employerSet = null;
+    private CDataAccess dataAccess = null;
 
     public MainUI() {
         jp1 = new JPanel();
@@ -53,6 +55,9 @@ public class MainUI extends JFrame implements ActionListener {
 
         deleteButton = new JButton("Delete");
         deleteButton.addActionListener(new DeleteActionListener());
+
+        saveButton = new JButton("Save");
+        saveButton.addActionListener(new SaveActionListener());
 
         jp1.add(eid_label);
         jp1.add(eid_text_field);
@@ -83,6 +88,8 @@ public class MainUI extends JFrame implements ActionListener {
         this.employerSet.addNewEmployer(EmployerType.manager, "m1", 0);
         this.employerSet.addNewEmployer(EmployerType.techer, "t1", 100);
         this.employerSet.addNewEmployer(EmployerType.saler, "s1", 10000);
+
+        this.dataAccess = new CDataAccess();
     }
 
     public void start() {
@@ -163,6 +170,14 @@ public class MainUI extends JFrame implements ActionListener {
             int row = ui.searchResultTable.getSelectedRow();
             long no = (long)ui.searchResultTableModel.getValueAt(row, 0);
             new DeleteEmployerUI(MainUI.this, true, MainUI.this.employerSet, no);
+        }
+    }
+
+    class SaveActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            MainUI ui = MainUI.this;
+            ui.dataAccess.save(ui.employerSet.listAllEmployer());
         }
     }
 
