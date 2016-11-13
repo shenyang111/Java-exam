@@ -20,7 +20,8 @@ public class MainUI extends JFrame implements ActionListener {
     private JLabel eid_label = null;
     private JTextField eid_text_field = null;
 
-    private JButton search_button = null;
+    private JButton searchNobutton = null;
+    private JButton searchNamebutton = null;
     private JButton search_all_button = null;
 
     private JButton addButton = null;
@@ -46,8 +47,11 @@ public class MainUI extends JFrame implements ActionListener {
         eid_label = new JLabel("id");
         eid_text_field = new JTextField(10);
 
-        search_button = new JButton("search");
-        search_button.addActionListener(this);
+        searchNobutton = new JButton("Search");
+        searchNobutton.addActionListener(new SearchNoActionListener());
+
+        searchNamebutton = new JButton("Search");
+        searchNamebutton.addActionListener(new SearchNameActionListener());
 
         search_all_button = new JButton("Search All");
         search_all_button.addActionListener(new SearchAllActionListener());
@@ -72,11 +76,12 @@ public class MainUI extends JFrame implements ActionListener {
 
         jp1.add(eid_label);
         jp1.add(eid_text_field);
+        jp1.add(searchNobutton);
 
         jp1.add(name_label);
         jp1.add(name_text_field);
 
-        jp1.add(search_button);
+        jp1.add(searchNamebutton);
         jp1.add(search_all_button);
         jp1.add(addButton);
         jp1.add(editButton);
@@ -107,7 +112,7 @@ public class MainUI extends JFrame implements ActionListener {
     }
 
     public void start() {
-        this.setSize(600, 500);
+        this.setSize(650, 500);
         this.setLocation(200, 150);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
@@ -130,6 +135,56 @@ public class MainUI extends JFrame implements ActionListener {
     public static void main(String[] args) {
         MainUI main_ui = new MainUI();
         main_ui.start();
+    }
+
+    class SearchNoActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            MainUI ui = MainUI.this;
+            long no = Long.valueOf(ui.eid_text_field.getText());
+
+            Employer employer = ui.employerSet.getEmployer(no);
+            ui.searchResultTableModel.setRowCount(1);
+
+            ui.searchResultTable.setValueAt(employer.no, 0, 0);
+            ui.searchResultTable.setValueAt(employer.name, 0, 1);
+            ui.searchResultTable.setValueAt(employer.type.toString(), 0, 2);
+
+            if (employer.type == EmployerType.techer) {
+                ui.searchResultTable.setValueAt(((Techer)employer).getSalaryHours(), 0, 3);
+            } else if (employer.type == EmployerType.saler) {
+                ui.searchResultTable.setValueAt(((Saler)employer).getSaleNum(), 0, 3);
+            } else {
+                ui.searchResultTable.setValueAt("", 0, 3);
+            }
+
+            ui.searchResultTable.setValueAt(employer.getPay(), 0, 4);
+        }
+    }
+
+    class SearchNameActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            MainUI ui = MainUI.this;
+            String name = ui.name_text_field.getText();
+
+            Employer employer = ui.employerSet.getEmployer(name);
+            ui.searchResultTableModel.setRowCount(1);
+
+            ui.searchResultTable.setValueAt(employer.no, 0, 0);
+            ui.searchResultTable.setValueAt(employer.name, 0, 1);
+            ui.searchResultTable.setValueAt(employer.type.toString(), 0, 2);
+
+            if (employer.type == EmployerType.techer) {
+                ui.searchResultTable.setValueAt(((Techer)employer).getSalaryHours(), 0, 3);
+            } else if (employer.type == EmployerType.saler) {
+                ui.searchResultTable.setValueAt(((Saler)employer).getSaleNum(), 0, 3);
+            } else {
+                ui.searchResultTable.setValueAt("", 0, 3);
+            }
+
+            ui.searchResultTable.setValueAt(employer.getPay(), 0, 4);
+        }
     }
 
     class SearchAllActionListener implements ActionListener {
@@ -215,7 +270,7 @@ public class MainUI extends JFrame implements ActionListener {
             try {
                 FileWriter fileWriter = new FileWriter(file);
                 for (Employer employer : ui.employerSet.listAllEmployer()) {
-                    fileWriter.write(employer.toString());
+                    fileWriter.write(employer.toString() + "\n");
                 }
                 fileWriter.close();
             } catch (Exception ex) {
