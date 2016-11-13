@@ -3,6 +3,8 @@ package cn.edu.wust.shenyang.payment;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.List;
 
 @SuppressWarnings("serial")
@@ -26,6 +28,7 @@ public class MainUI extends JFrame implements ActionListener {
     private JButton deleteButton = null;
     private JButton saveButton = null;
     private JButton loadButton = null;
+    private JButton saveFileButton = null;
 
     private DefaultTableModel searchResultTableModel = null;
     private JTable searchResultTable = null;
@@ -64,6 +67,9 @@ public class MainUI extends JFrame implements ActionListener {
         loadButton = new JButton("Load");
         loadButton.addActionListener(new LoadActionListener());
 
+        saveFileButton = new JButton("Save to file");
+        saveFileButton.addActionListener(new SaveFileActionListener());
+
         jp1.add(eid_label);
         jp1.add(eid_text_field);
 
@@ -77,6 +83,7 @@ public class MainUI extends JFrame implements ActionListener {
         jp1.add(deleteButton);
         jp1.add(saveButton);
         jp1.add(loadButton);
+        jp1.add(saveFileButton);
 
         this.add(jp1);
 
@@ -193,6 +200,27 @@ public class MainUI extends JFrame implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             MainUI ui = MainUI.this;
             ui.dataAccess.load(ui.employerSet);
+        }
+    }
+
+    class SaveFileActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            MainUI ui = MainUI.this;
+
+            JFileChooser jfc = new JFileChooser();
+            jfc.showSaveDialog(ui);
+
+            File file = jfc.getSelectedFile();
+            try {
+                FileWriter fileWriter = new FileWriter(file);
+                for (Employer employer : ui.employerSet.listAllEmployer()) {
+                    fileWriter.write(employer.toString());
+                }
+                fileWriter.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 

@@ -96,7 +96,7 @@ public class CDataAccess {
         String sql = "SELECT * FROM UserInfo";
 
         ResultSet result = query(sql);
-        printUserInfo(result);
+        //printUserInfo(result);
 
         try {
             while(result.next()) {

@@ -28,6 +28,6 @@ class Techer extends Employer {
     }
 
     public String toString() {
-        return "name:" + name + " no:" + no + " pay:" + getPay();
+        return "no:" + no + ", name:" + name + ", pay:" + getPay();
     }
 }

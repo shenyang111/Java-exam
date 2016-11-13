@@ -18,6 +18,6 @@ class Manager extends Employer {
     }
 
     public String toString() {
-        return "name:" + name + " no:" + no + " pay:8000.0";
+        return "no:" + no + ", name:" + name + ", pay:8000.0";
     } 
 }
