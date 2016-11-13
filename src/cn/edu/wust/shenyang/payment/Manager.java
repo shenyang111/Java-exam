@@ -6,14 +6,17 @@ class Manager extends Employer {
     double getPay() {
         return pay;
     }
-    
+
     Manager(String name) {
         super(name);
-        no = id;
-
         this.type = EmployerType.manager;
     }
-    
+
+    Manager(long no, String name) {
+        super(no, name);
+        this.type = EmployerType.manager;
+    }
+
     public String toString() {
         return "name:" + name + " no:" + no + " pay:8000.0";
     } 

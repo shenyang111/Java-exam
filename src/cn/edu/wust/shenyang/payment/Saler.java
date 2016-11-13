@@ -5,8 +5,12 @@ class Saler extends Employer {
     
     Saler(String name, double saleNum) {
         super(name);
-        no = id;
+        this.type = EmployerType.saler;
+        this.saleNum = saleNum;
+    }
 
+    Saler(long no, String name, double saleNum) {
+        super(no, name);
         this.type = EmployerType.saler;
         this.saleNum = saleNum;
     }

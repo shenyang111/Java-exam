@@ -21,6 +21,20 @@ public class CEmployerSet {
         }
     }
 
+    public void addNewEmployer(long no, EmployerType type, String name, double workload) {
+        switch (type) {
+            case manager :
+                employers.add(new Manager(no, name));
+                break;
+            case techer :
+                employers.add(new Techer(no, name, workload));
+                break;
+            case saler :
+                employers.add(new Saler(no, name, workload));
+                break;
+        }
+    }
+
     public Employer getEmployer(long no) {
         for (Employer employer : employers) {
             if (employer.no == no) {

@@ -5,8 +5,12 @@ class Techer extends Employer {
     
     Techer(String name, double salaryHours) {
         super(name);
-        no = id;
+        this.type = EmployerType.techer;
+        this.salaryHours = salaryHours;
+    }
 
+    Techer(long no, String name, double salaryHours) {
+        super(no, name);
         this.type = EmployerType.techer;
         this.salaryHours = salaryHours;
     }

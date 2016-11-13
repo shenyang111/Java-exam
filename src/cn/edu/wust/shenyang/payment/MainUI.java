@@ -92,9 +92,9 @@ public class MainUI extends JFrame implements ActionListener {
         jp1.add(this.jsp);
 
         this.employerSet = new CEmployerSet();
-        this.employerSet.addNewEmployer(EmployerType.manager, "m1", 0);
-        this.employerSet.addNewEmployer(EmployerType.techer, "t1", 100);
-        this.employerSet.addNewEmployer(EmployerType.saler, "s1", 10000);
+        //this.employerSet.addNewEmployer(EmployerType.manager, "m1", 0);
+        //this.employerSet.addNewEmployer(EmployerType.techer, "t1", 100);
+        //this.employerSet.addNewEmployer(EmployerType.saler, "s1", 10000);
 
         this.dataAccess = new CDataAccess();
     }
@@ -192,7 +192,7 @@ public class MainUI extends JFrame implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             MainUI ui = MainUI.this;
-            ui.dataAccess.load();
+            ui.dataAccess.load(ui.employerSet);
         }
     }
 

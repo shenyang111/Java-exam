@@ -92,11 +92,36 @@ public class CDataAccess {
         }
     }
 
-    public void load() {
+    public void load(CEmployerSet employerSet) {
         String sql = "SELECT * FROM UserInfo";
 
         ResultSet result = query(sql);
         printUserInfo(result);
-        
+
+        try {
+            while(result.next()) {
+                System.out.println("userNname:" + result.getString(1)
+                        + ", password:" + result.getString(2));
+                long no = result.getLong(1);
+                String name = result.getString(2);
+                String type_str = result.getString(3);
+                double workload = result.getDouble(4);
+
+                EmployerType type = null;
+                if (type_str.equals("manager")) {
+                    type = EmployerType.manager;
+                } else if (type_str.equals("techer")) {
+                    type = EmployerType.techer;
+                } else if (type_str.equals("saler")) {
+                    type = EmployerType.saler;
+                } else {
+                    throw new RuntimeException("unknown type [" + type_str + "]");
+                }
+
+                employerSet.addNewEmployer(no, type, name, workload);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

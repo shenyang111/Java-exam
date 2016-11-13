@@ -14,10 +14,19 @@ abstract class Employer {
     EmployerType type;
 
     abstract double getPay();
-    
+
     Employer(String name) {
         this.name = name;
         id = id + 1;
+        this.no = id;
+    }
+
+    Employer(long no, String name) {
+        this.no = no;
+        this.name = name;
+        if (this.no > id) {
+            id = this.no;
+        }
     }
 
     public void setName(String name) {
